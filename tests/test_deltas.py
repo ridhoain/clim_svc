@@ -2,7 +2,10 @@
 Unit tests for delta computation and risk scoring.
 NASA POWER calls are mocked so tests run offline.
 """
+import json
 import pytest
+import tempfile
+from pathlib import Path
 from unittest.mock import patch
 
 from app.scoring import (
@@ -167,3 +170,71 @@ class TestDeltaInvariants:
         s245 = get_future_delta(0, 110, "slr_cm", "ssp245")
         s585 = get_future_delta(0, 110, "slr_cm", "ssp585")
         assert s126 < s245 < s585
+
+
+# ---------------------------------------------------------------------------
+# Fixture-backed baseline loading
+# ---------------------------------------------------------------------------
+
+class TestFixtureLoader:
+    """nasa_power functions return fixture values without any HTTP call."""
+
+    def _make_fixture(self, tmp_path: Path) -> Path:
+        fixture = {
+            "metadata": {"baseline_period": "2000-2020"},
+            "locations": {
+                "-6.21,106.85": {
+                    "city": "Jakarta",
+                    "T2M_annual_mean": 26.5,
+                    "PRECTOTCORR_p99": 14.8,
+                    "GWETROOT_dry_season": 0.43,
+                }
+            },
+        }
+        f = tmp_path / "baselines.json"
+        f.write_text(json.dumps(fixture))
+        return f
+
+    def test_annual_mean_uses_fixture(self, tmp_path):
+        fixture_path = self._make_fixture(tmp_path)
+        with patch("app.data_sources.nasa_power.BASELINES_FILE", fixture_path), \
+             patch("app.data_sources.nasa_power._fetch_raw") as mock_fetch:
+            from app.data_sources import nasa_power
+            result = nasa_power.annual_mean(-6.2088, 106.8456, "T2M", 2000, 2020)
+        assert result == 26.5
+        mock_fetch.assert_not_called()
+
+    def test_percentile_monthly_uses_fixture(self, tmp_path):
+        fixture_path = self._make_fixture(tmp_path)
+        with patch("app.data_sources.nasa_power.BASELINES_FILE", fixture_path), \
+             patch("app.data_sources.nasa_power._fetch_raw") as mock_fetch:
+            from app.data_sources import nasa_power
+            result = nasa_power.percentile_monthly(-6.2088, 106.8456, "PRECTOTCORR", 2000, 2020)
+        assert result == 14.8
+        mock_fetch.assert_not_called()
+
+    def test_dry_season_mean_uses_fixture(self, tmp_path):
+        fixture_path = self._make_fixture(tmp_path)
+        with patch("app.data_sources.nasa_power.BASELINES_FILE", fixture_path), \
+             patch("app.data_sources.nasa_power._fetch_raw") as mock_fetch:
+            from app.data_sources import nasa_power
+            result = nasa_power.dry_season_mean(-6.2088, 106.8456, "GWETROOT", 2000, 2020)
+        assert result == 0.43
+        mock_fetch.assert_not_called()
+
+    def test_missing_location_falls_through_to_api(self, tmp_path):
+        fixture_path = self._make_fixture(tmp_path)
+        with patch("app.data_sources.nasa_power.BASELINES_FILE", fixture_path), \
+             patch("app.data_sources.nasa_power._fetch_raw", return_value={"200001": 25.0}) as mock_fetch:
+            from app.data_sources import nasa_power
+            # Unknown location — not in fixture
+            nasa_power.annual_mean(0.0, 0.0, "T2M", 2000, 2020)
+        mock_fetch.assert_called_once()
+
+    def test_missing_fixture_file_falls_through_to_api(self, tmp_path):
+        missing_path = tmp_path / "nonexistent.json"
+        with patch("app.data_sources.nasa_power.BASELINES_FILE", missing_path), \
+             patch("app.data_sources.nasa_power._fetch_raw", return_value={"200001": 25.0}) as mock_fetch:
+            from app.data_sources import nasa_power
+            nasa_power.annual_mean(-6.2088, 106.8456, "T2M", 2000, 2020)
+        mock_fetch.assert_called_once()

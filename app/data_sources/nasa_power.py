@@ -2,8 +2,14 @@
 NASA POWER API client for baseline climate data (2000-2020).
 Endpoint: https://power.larc.nasa.gov/api/temporal/monthly/point
 No authentication required.
+
+Fixture mode: if data/baselines.json exists, pre-computed values are
+returned without any HTTP call. Run scripts/fetch_baselines.py locally
+to populate or refresh the fixture.
 """
+import json
 from collections import defaultdict
+from pathlib import Path
 from typing import Literal
 
 import httpx
@@ -11,8 +17,30 @@ import numpy as np
 
 BASE_URL = "https://power.larc.nasa.gov/api/temporal/monthly/point"
 COMMUNITY = "RE"
+BASELINES_FILE = Path(__file__).parent.parent.parent / "data" / "baselines.json"
 
 Parameter = Literal["T2M", "PRECTOTCORR", "GWETROOT"]
+
+_FIXTURE_PARAM_MAP: dict[str, str] = {
+    "T2M": "T2M_annual_mean",
+    "PRECTOTCORR": "PRECTOTCORR_p99",
+    "GWETROOT": "GWETROOT_dry_season",
+}
+
+
+def _fixture_key(lat: float, lon: float) -> str:
+    return f"{lat:.2f},{lon:.2f}"
+
+
+def _load_fixture(lat: float, lon: float, fixture_field: str) -> float | None:
+    """Return a pre-computed value from the fixture file, or None if not found."""
+    if not BASELINES_FILE.exists():
+        return None
+    data = json.loads(BASELINES_FILE.read_text())
+    entry = data.get("locations", {}).get(_fixture_key(lat, lon))
+    if entry is None:
+        return None
+    return entry.get(fixture_field)
 
 
 def _fetch_raw(
@@ -46,8 +74,11 @@ def annual_mean(
     end_year: int,
 ) -> float:
     """20-year annual mean for the given parameter."""
+    cached = _load_fixture(lat, lon, _FIXTURE_PARAM_MAP[parameter])
+    if cached is not None:
+        return cached
+
     monthly = _fetch_raw(lat, lon, parameter, start_year, end_year)
-    # Group by year (key format: YYYYMM), skip fill values (-999)
     by_year: dict[int, list[float]] = defaultdict(list)
     for yyyymm, val in monthly.items():
         if val != -999.0:
@@ -65,6 +96,10 @@ def percentile_monthly(
     pct: float = 99.0,
 ) -> float:
     """Return the given percentile across all monthly values in the period."""
+    cached = _load_fixture(lat, lon, _FIXTURE_PARAM_MAP[parameter])
+    if cached is not None:
+        return cached
+
     monthly = _fetch_raw(lat, lon, parameter, start_year, end_year)
     values = [v for v in monthly.values() if v != -999.0]
     return float(np.percentile(values, pct))
@@ -79,6 +114,10 @@ def dry_season_mean(
     dry_months: tuple[int, ...] = (6, 7, 8, 9),
 ) -> float:
     """Mean over specified months (1-indexed) across all years in the period."""
+    cached = _load_fixture(lat, lon, _FIXTURE_PARAM_MAP[parameter])
+    if cached is not None:
+        return cached
+
     monthly = _fetch_raw(lat, lon, parameter, start_year, end_year)
     values = [
         val
