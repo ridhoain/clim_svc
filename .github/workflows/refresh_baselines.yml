@@ -4,6 +4,13 @@ on:
   schedule:
     - cron: '0 2 1 * *'   # 1st of every month at 02:00 UTC
   workflow_dispatch:        # allow manual runs
+    inputs:
+      source:
+        description: 'Data source (nasa or era5)'
+        required: false
+        default: 'era5'
+        type: choice
+        options: [era5, nasa]
 
 permissions:
   contents: write
@@ -24,13 +31,24 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install httpx numpy pandas
+        run: |
+          pip install httpx numpy pandas cdsapi xarray netCDF4
 
       - name: Clear existing fixture
         run: rm -f data/baselines.json
 
-      - name: Fetch baselines from NASA POWER
-        run: python scripts/fetch_baselines.py --workers 4
+      - name: Fetch baselines (ERA5 preferred, NASA POWER fallback)
+        env:
+          CDS_API_KEY: ${{ secrets.CDS_API_KEY }}
+        run: |
+          SOURCE="${{ github.event.inputs.source || 'era5' }}"
+          if [ "$SOURCE" = "era5" ] && [ -n "$CDS_API_KEY" ]; then
+            echo "Using ERA5 (Copernicus CDS)"
+            python scripts/fetch_baselines.py --source era5
+          else
+            echo "Using NASA POWER (no CDS_API_KEY or source=nasa)"
+            python scripts/fetch_baselines.py --source nasa --workers 4
+          fi
 
       - name: Commit and push if data changed
         run: |
@@ -38,6 +56,6 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/baselines.json
           git diff --cached --quiet && echo "No changes to commit." || (
-            git commit -m "chore: refresh climate baselines from NASA POWER" &&
+            git commit -m "chore: refresh climate baselines" &&
             git push
           )
