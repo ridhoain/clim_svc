@@ -24,13 +24,13 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install httpx numpy
+        run: pip install httpx numpy pandas
 
       - name: Clear existing fixture
         run: rm -f data/baselines.json
 
       - name: Fetch baselines from NASA POWER
-        run: python scripts/fetch_baselines.py
+        run: python scripts/fetch_baselines.py --workers 4
 
       - name: Commit and push if data changed
         run: |
