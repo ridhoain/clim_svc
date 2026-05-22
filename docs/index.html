@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indonesia Climate Hazard Assessment 2020–2040</title>
+  <style>
+    :root {
+      --low:      #16a34a;
+      --moderate: #d97706;
+      --high:     #dc2626;
+      --critical: #7c3aed;
+      --bg:       #f1f5f9;
+      --card:     #ffffff;
+      --border:   #e2e8f0;
+      --text:     #0f172a;
+      --muted:    #64748b;
+      --header:   #0f172a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* ── Header ── */
+    header { background: var(--header); color: #fff; padding: 1.75rem 2rem 1.5rem; }
+    header h1 { font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+    header p  { color: #94a3b8; margin-top: 0.35rem; font-size: 0.85rem; line-height: 1.5; }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      padding: 1.25rem 2rem; background: #fff; border-bottom: 1px solid var(--border);
+    }
+    .controls label { font-size: 0.875rem; font-weight: 500; }
+    .controls select {
+      padding: 0.35rem 0.75rem; border: 1px solid var(--border);
+      border-radius: 6px; font-size: 0.875rem; background: #fff; cursor: pointer;
+    }
+    .controls select:focus { outline: 2px solid #3b82f6; outline-offset: 1px; }
+    #data-note { font-size: 0.8rem; color: var(--muted); margin-left: auto; }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1rem; padding: 1.5rem 2rem;
+    }
+
+    /* ── City card ── */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+    .card-header {
+      padding: 0.875rem 1.25rem; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .card-header h2 { font-size: 0.975rem; font-weight: 600; }
+    .chip {
+      font-size: 0.78rem; font-weight: 700; padding: 0.2rem 0.65rem;
+      border-radius: 999px; color: #fff; letter-spacing: 0.01em;
+    }
+
+    /* ── Hazard rows ── */
+    .col-heads {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr 52px;
+      padding: 0.3rem 1.25rem; gap: 0.5rem;
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--muted); background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .col-heads span:not(:first-child) { text-align: right; }
+    .hrow {
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr 52px;
+      padding: 0.55rem 1.25rem; gap: 0.5rem; align-items: center;
+      font-size: 0.83rem; border-bottom: 1px solid var(--border);
+    }
+    .hrow:last-child { border-bottom: none; }
+    .hname { font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 0.35rem; }
+    .val  { text-align: right; font-variant-numeric: tabular-nums; }
+    .dval { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+    .dval.pos { color: #dc2626; }
+    .dval.neg { color: #2563eb; }
+    .dval.neu { color: var(--muted); }
+    .badge {
+      font-size: 0.72rem; font-weight: 700; padding: 0.18rem 0; border-radius: 5px;
+      color: #fff; text-align: center; min-width: 42px;
+    }
+    .badge.low      { background: var(--low); }
+    .badge.moderate { background: var(--moderate); }
+    .badge.high     { background: var(--high); }
+    .badge.critical { background: var(--critical); }
+
+    /* ── Composite bar ── */
+    .composite-bar { padding: 0.6rem 1.25rem; background: var(--bg); border-top: 1px solid var(--border); display: flex; align-items: center; gap: 0.75rem; }
+    .bar-track { flex: 1; height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+    .bar-fill  { height: 100%; border-radius: 999px; transition: width 0.3s; }
+    .comp-label { font-size: 0.78rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+
+    /* ── Loading / error ── */
+    .message { text-align: center; padding: 4rem; color: var(--muted); font-size: 0.9rem; grid-column: 1/-1; }
+
+    /* ── Footer ── */
+    footer { text-align: center; padding: 1.5rem 2rem; color: var(--muted); font-size: 0.78rem; border-top: 1px solid var(--border); line-height: 1.6; background: #fff; }
+    footer a { color: #3b82f6; text-decoration: none; }
+
+    @media (max-width: 600px) {
+      header, .controls, .grid { padding-left: 1rem; padding-right: 1rem; }
+      .grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Indonesia Climate Hazard Assessment</h1>
+  <p>Baseline 2000–2020 &nbsp;→&nbsp; Projected 2020–2040 &nbsp;·&nbsp; Four hazards: temperature · precipitation · drought · sea level</p>
+</header>
+
+<div class="controls">
+  <label for="scenario">Emissions scenario</label>
+  <select id="scenario">
+    <option value="ssp126">SSP1-2.6 — Low emissions (1.5 °C target)</option>
+    <option value="ssp245" selected>SSP2-4.5 — Medium emissions (2 °C target)</option>
+    <option value="ssp585">SSP5-8.5 — High emissions (no mitigation)</option>
+  </select>
+  <span id="data-note"></span>
+</div>
+
+<div id="grid" class="grid">
+  <div class="message">Loading baseline data…</div>
+</div>
+
+<footer>
+  Baseline climate data: <a href="https://power.larc.nasa.gov/" target="_blank">NASA POWER</a> (2000–2020) &nbsp;·&nbsp;
+  Future projections: <a href="https://www.ipcc.ch/report/ar6/wg1/" target="_blank">IPCC AR6 WGI</a> Southeast Asia region (2020–2040) &nbsp;·&nbsp;
+  <a href="https://github.com/ridhoain/clim_svc" target="_blank">Source code</a>
+</footer>
+
+<script>
+// ── Delta table (mirrors app/data_sources/cmip6.py _REGIONAL_DELTAS) ──────────
+const DELTAS = {
+  ssp126: { temperature: 0.5,  precipitation: 1.5,  soil_wetness: -0.012, slr_cm: 5.5 },
+  ssp245: { temperature: 0.7,  precipitation: 2.0,  soil_wetness: -0.018, slr_cm: 7.0 },
+  ssp585: { temperature: 0.9,  precipitation: 3.0,  soil_wetness: -0.025, slr_cm: 9.0 },
+};
+
+// ── Scoring (mirrors app/scoring.py) ─────────────────────────────────────────
+function stepped(v, bp) {
+  for (const [upper, score, level] of bp) if (v < upper) return { score, level };
+  return { score: bp.at(-1)[1], level: bp.at(-1)[2] };
+}
+const scoreTemp     = d => stepped(d,            [[0.5,15,'low'],[1.0,35,'moderate'],[1.5,55,'moderate'],[2.0,75,'high'],[Infinity,95,'critical']]);
+const scorePrecip   = d => stepped(Math.abs(d),  [[2,10,'low'],[4,30,'moderate'],[7,55,'moderate'],[11,75,'high'],[Infinity,95,'critical']]);
+const scoreDrought  = d => stepped(-d,           [[0.01,10,'low'],[0.02,30,'moderate'],[0.04,55,'moderate'],[0.06,75,'high'],[Infinity,95,'critical']]);
+const scoreSeaLevel = d => stepped(d,            [[5,15,'low'],[8,35,'moderate'],[12,60,'moderate'],[16,80,'high'],[Infinity,95,'critical']]);
+
+function levelColor(level) {
+  return { low: '#16a34a', moderate: '#d97706', high: '#dc2626', critical: '#7c3aed' }[level] ?? '#64748b';
+}
+
+// ── Card builder ──────────────────────────────────────────────────────────────
+function buildCard(loc, d) {
+  const tDelta = d.temperature;
+  const tBase  = loc.T2M_annual_mean;
+  const tFut   = tBase + tDelta;
+  const tRisk  = scoreTemp(tDelta);
+
+  const pDelta = d.precipitation;
+  const pBase  = loc.PRECTOTCORR_p99;
+  const pFut   = pBase * (1 + pDelta / 100);
+  const pRisk  = scorePrecip(pDelta);
+
+  const wDelta = d.soil_wetness;
+  const wBase  = loc.GWETROOT_dry_season;
+  const wFut   = wBase + wDelta;
+  const wRisk  = scoreDrought(wDelta);
+
+  const sDelta = d.slr_cm;
+  const sRisk  = scoreSeaLevel(sDelta);
+
+  const composite = Math.round((tRisk.score + pRisk.score + wRisk.score + sRisk.score) / 4);
+  const compColor = levelColor(composite < 25 ? 'low' : composite < 50 ? 'moderate' : composite < 75 ? 'high' : 'critical');
+
+  const sign = (v, unit='') => (v >= 0 ? '+' : '') + v.toFixed(unit === '%' ? 1 : (unit === 'cm' ? 1 : 3)) + unit;
+  const dClass = v => v > 0 ? 'pos' : v < 0 ? 'neg' : 'neu';
+
+  const badge = r => `<span class="badge ${r.level}">${r.score}</span>`;
+
+  const row = (icon, name, base, fut, dv, dUnit, risk) => `
+    <div class="hrow">
+      <span class="hname">${icon} ${name}</span>
+      <span class="val">${base}</span>
+      <span class="dval ${dClass(dv)}">${sign(dv, dUnit)}</span>
+      ${badge(risk)}
+    </div>`;
+
+  return `
+    <div class="card">
+      <div class="card-header">
+        <h2>${loc.city}</h2>
+        <span class="chip" style="background:${compColor}">Composite ${composite}/100</span>
+      </div>
+      <div class="col-heads">
+        <span>Hazard</span><span>Baseline</span><span>Δ to 2040</span><span>Score</span>
+      </div>
+      ${row('🌡', 'Temperature',   tBase.toFixed(1) + ' °C',   tFut.toFixed(1) + ' °C',   tDelta, '°C', tRisk)}
+      ${row('🌧', 'Precip p99',    pBase.toFixed(1) + ' mm/d', pFut.toFixed(1) + ' mm/d', pDelta, '%',  pRisk)}
+      ${row('🌱', 'Soil wetness',  wBase.toFixed(3),            wFut.toFixed(3),            wDelta, '',   wRisk)}
+      ${row('🌊', 'Sea level',     '3.6 mm/yr',                 '+' + sDelta.toFixed(1) + ' cm', sDelta, 'cm', sRisk)}
+      <div class="composite-bar">
+        <span class="comp-label">Composite risk</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${composite}%;background:${compColor}"></div></div>
+        <span class="comp-label">${composite}/100</span>
+      </div>
+    </div>`;
+}
+
+// ── Main ──────────────────────────────────────────────────────────────────────
+let baselines = null;
+
+async function loadBaselines() {
+  if (baselines) return baselines;
+  const res = await fetch('./data/baselines.json');
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  baselines = await res.json();
+  return baselines;
+}
+
+async function render() {
+  const scenario = document.getElementById('scenario').value;
+  const grid = document.getElementById('grid');
+
+  try {
+    const data = await loadBaselines();
+    const note = document.getElementById('data-note');
+    const ts = data.metadata?.fetched_at;
+    note.textContent = (!ts || ts === 'seeded')
+      ? '⚠ Seeded values — trigger the GitHub Actions workflow to refresh with real NASA POWER data'
+      : `Data refreshed: ${new Date(ts).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' })}`;
+
+    const d = DELTAS[scenario];
+    grid.innerHTML = Object.values(data.locations).map(loc => buildCard(loc, d)).join('');
+  } catch (e) {
+    grid.innerHTML = `<div class="message">Failed to load baseline data: ${e.message}</div>`;
+  }
+}
+
+document.getElementById('scenario').addEventListener('change', render);
+render();
+</script>
+</body>
+</html>
