@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [claude/climate-hazard-assessment-r6zsD, main]
+    branches: [claude/climate-hazard-assessment-r6zsD]
     paths:
       - 'docs/**'
       - 'data/baselines.json'
