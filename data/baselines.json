@@ -3,61 +3,1057 @@
     "baseline_period": "2000-2020",
     "source": "NASA POWER API (https://power.larc.nasa.gov/api/temporal/monthly/point)",
     "parameters": {
-      "T2M_annual_mean": "Annual mean 2m air temperature (°C)",
+      "T2M_annual_mean": "Annual mean 2m air temperature (\u00b0C)",
       "PRECTOTCORR_p99": "99th-percentile monthly precipitation (mm/day)",
       "GWETROOT_dry_season": "Mean root-zone wetness Jun-Sep (0-1 scale)"
     },
-    "note": "Seeded from WMO/BMKG published climate normals. Run scripts/fetch_baselines.py locally to replace with real NASA POWER values.",
-    "fetched_at": "seeded"
+    "city_count": 174,
+    "fetched_at": "2026-05-22T10:44:44.098965+00:00"
   },
   "locations": {
-    "-6.21,106.85": {
-      "city": "Jakarta",
-      "T2M_annual_mean": 26.5,
-      "PRECTOTCORR_p99": 14.8,
-      "GWETROOT_dry_season": 0.43
-    },
-    "-7.26,112.75": {
-      "city": "Surabaya",
-      "T2M_annual_mean": 27.3,
-      "PRECTOTCORR_p99": 12.1,
-      "GWETROOT_dry_season": 0.31
-    },
-    "3.60,98.67": {
-      "city": "Medan",
-      "T2M_annual_mean": 27.0,
-      "PRECTOTCORR_p99": 18.5,
-      "GWETROOT_dry_season": 0.58
-    },
-    "-5.15,119.43": {
-      "city": "Makassar",
-      "T2M_annual_mean": 27.5,
-      "PRECTOTCORR_p99": 11.4,
-      "GWETROOT_dry_season": 0.27
-    },
     "-6.92,107.62": {
       "city": "Bandung",
-      "T2M_annual_mean": 22.1,
-      "PRECTOTCORR_p99": 16.2,
-      "GWETROOT_dry_season": 0.52
+      "T2M_annual_mean": 21.43,
+      "PRECTOTCORR_p99": 18.26,
+      "GWETROOT_dry_season": 0.7723
+    },
+    "-6.23,106.99": {
+      "city": "Bekasi",
+      "T2M_annual_mean": 27.32,
+      "PRECTOTCORR_p99": 20.03,
+      "GWETROOT_dry_season": 0.7208
+    },
+    "-6.40,106.79": {
+      "city": "Depok",
+      "T2M_annual_mean": 24.75,
+      "PRECTOTCORR_p99": 19.55,
+      "GWETROOT_dry_season": 0.7487
+    },
+    "-6.21,106.85": {
+      "city": "Jakarta",
+      "T2M_annual_mean": 27.32,
+      "PRECTOTCORR_p99": 20.03,
+      "GWETROOT_dry_season": 0.7208
+    },
+    "-6.87,107.54": {
+      "city": "Cimahi",
+      "T2M_annual_mean": 21.43,
+      "PRECTOTCORR_p99": 18.26,
+      "GWETROOT_dry_season": 0.7723
+    },
+    "-6.60,106.81": {
+      "city": "Bogor",
+      "T2M_annual_mean": 24.75,
+      "PRECTOTCORR_p99": 19.55,
+      "GWETROOT_dry_season": 0.7487
+    },
+    "-6.73,108.55": {
+      "city": "Cirebon",
+      "T2M_annual_mean": 27.78,
+      "PRECTOTCORR_p99": 19.79,
+      "GWETROOT_dry_season": 0.6583
+    },
+    "-7.33,108.22": {
+      "city": "Tasikmalaya",
+      "T2M_annual_mean": 23.72,
+      "PRECTOTCORR_p99": 24.95,
+      "GWETROOT_dry_season": 0.8042
+    },
+    "-6.92,106.93": {
+      "city": "Sukabumi",
+      "T2M_annual_mean": 23.75,
+      "PRECTOTCORR_p99": 18.7,
+      "GWETROOT_dry_season": 0.7926
+    },
+    "-6.33,107.34": {
+      "city": "Karawang",
+      "T2M_annual_mean": 25.36,
+      "PRECTOTCORR_p99": 18.01,
+      "GWETROOT_dry_season": 0.7523
+    },
+    "-6.56,107.44": {
+      "city": "Purwakarta",
+      "T2M_annual_mean": 25.36,
+      "PRECTOTCORR_p99": 18.01,
+      "GWETROOT_dry_season": 0.7523
+    },
+    "-6.57,107.76": {
+      "city": "Subang",
+      "T2M_annual_mean": 25.36,
+      "PRECTOTCORR_p99": 18.01,
+      "GWETROOT_dry_season": 0.7523
+    },
+    "-6.98,108.48": {
+      "city": "Kuningan",
+      "T2M_annual_mean": 24.79,
+      "PRECTOTCORR_p99": 16.91,
+      "GWETROOT_dry_season": 0.7613
+    },
+    "-7.21,107.91": {
+      "city": "Garut",
+      "T2M_annual_mean": 22.63,
+      "PRECTOTCORR_p99": 17.16,
+      "GWETROOT_dry_season": 0.7563
     },
     "-6.97,110.42": {
       "city": "Semarang",
-      "T2M_annual_mean": 27.1,
-      "PRECTOTCORR_p99": 13.6,
-      "GWETROOT_dry_season": 0.38
+      "T2M_annual_mean": 26.83,
+      "PRECTOTCORR_p99": 19.21,
+      "GWETROOT_dry_season": 0.713
     },
-    "-2.98,104.78": {
-      "city": "Palembang",
-      "T2M_annual_mean": 27.2,
+    "-6.33,108.32": {
+      "city": "Indramayu",
+      "T2M_annual_mean": 26.51,
+      "PRECTOTCORR_p99": 18.3,
+      "GWETROOT_dry_season": 0.7135
+    },
+    "-7.58,110.82": {
+      "city": "Solo",
+      "T2M_annual_mean": 24.96,
+      "PRECTOTCORR_p99": 18.26,
+      "GWETROOT_dry_season": 0.6987
+    },
+    "-7.48,110.22": {
+      "city": "Magelang",
+      "T2M_annual_mean": 23.01,
+      "PRECTOTCORR_p99": 16.29,
+      "GWETROOT_dry_season": 0.7508
+    },
+    "-6.87,109.14": {
+      "city": "Tegal",
+      "T2M_annual_mean": 25.59,
+      "PRECTOTCORR_p99": 16.36,
+      "GWETROOT_dry_season": 0.7479
+    },
+    "-6.89,109.68": {
+      "city": "Pekalongan",
+      "T2M_annual_mean": 25.59,
+      "PRECTOTCORR_p99": 16.36,
+      "GWETROOT_dry_season": 0.7479
+    },
+    "-7.33,110.51": {
+      "city": "Salatiga",
+      "T2M_annual_mean": 24.96,
+      "PRECTOTCORR_p99": 18.26,
+      "GWETROOT_dry_season": 0.6987
+    },
+    "-7.42,109.23": {
+      "city": "Purwokerto",
+      "T2M_annual_mean": 24.97,
+      "PRECTOTCORR_p99": 17.56,
+      "GWETROOT_dry_season": 0.7849
+    },
+    "-7.73,109.02": {
+      "city": "Cilacap",
+      "T2M_annual_mean": 25.05,
+      "PRECTOTCORR_p99": 18.04,
+      "GWETROOT_dry_season": 0.8026
+    },
+    "-7.68,109.65": {
+      "city": "Kebumen",
+      "T2M_annual_mean": 24.97,
+      "PRECTOTCORR_p99": 17.56,
+      "GWETROOT_dry_season": 0.7849
+    },
+    "-7.26,112.75": {
+      "city": "Surabaya",
+      "T2M_annual_mean": 26.52,
+      "PRECTOTCORR_p99": 15.53,
+      "GWETROOT_dry_season": 0.4937
+    },
+    "-7.36,109.91": {
+      "city": "Wonosobo",
+      "T2M_annual_mean": 23.01,
+      "PRECTOTCORR_p99": 16.29,
+      "GWETROOT_dry_season": 0.7508
+    },
+    "-7.82,112.01": {
+      "city": "Kediri",
+      "T2M_annual_mean": 25.43,
+      "PRECTOTCORR_p99": 15.93,
+      "GWETROOT_dry_season": 0.6057
+    },
+    "-7.97,112.63": {
+      "city": "Malang",
+      "T2M_annual_mean": 24.53,
+      "PRECTOTCORR_p99": 16.21,
+      "GWETROOT_dry_season": 0.4954
+    },
+    "-8.10,112.16": {
+      "city": "Blitar",
+      "T2M_annual_mean": 25.43,
+      "PRECTOTCORR_p99": 15.93,
+      "GWETROOT_dry_season": 0.6057
+    },
+    "-7.75,113.22": {
+      "city": "Probolinggo",
+      "T2M_annual_mean": 25.19,
+      "PRECTOTCORR_p99": 15.3,
+      "GWETROOT_dry_season": 0.6074
+    },
+    "-7.63,111.52": {
+      "city": "Madiun",
+      "T2M_annual_mean": 26.0,
+      "PRECTOTCORR_p99": 16.02,
+      "GWETROOT_dry_season": 0.6919
+    },
+    "-7.47,111.43": {
+      "city": "Mojokerto",
+      "T2M_annual_mean": 26.0,
+      "PRECTOTCORR_p99": 16.02,
+      "GWETROOT_dry_season": 0.6919
+    },
+    "-7.65,112.91": {
+      "city": "Pasuruan",
+      "T2M_annual_mean": 27.64,
+      "PRECTOTCORR_p99": 15.08,
+      "GWETROOT_dry_season": 0.606
+    },
+    "-7.87,112.53": {
+      "city": "Batu",
+      "T2M_annual_mean": 24.53,
+      "PRECTOTCORR_p99": 16.21,
+      "GWETROOT_dry_season": 0.4954
+    },
+    "-8.18,113.67": {
+      "city": "Jember",
+      "T2M_annual_mean": 24.06,
+      "PRECTOTCORR_p99": 14.13,
+      "GWETROOT_dry_season": 0.596
+    },
+    "-8.22,114.37": {
+      "city": "Banyuwangi",
+      "T2M_annual_mean": 24.64,
       "PRECTOTCORR_p99": 17.3,
-      "GWETROOT_dry_season": 0.49
+      "GWETROOT_dry_season": 0.4967
+    },
+    "-7.45,112.72": {
+      "city": "Sidoarjo",
+      "T2M_annual_mean": 26.52,
+      "PRECTOTCORR_p99": 15.53,
+      "GWETROOT_dry_season": 0.4937
+    },
+    "-7.16,112.65": {
+      "city": "Gresik",
+      "T2M_annual_mean": 28.02,
+      "PRECTOTCORR_p99": 15.61,
+      "GWETROOT_dry_season": 0.6286
+    },
+    "-7.72,110.36": {
+      "city": "Sleman",
+      "T2M_annual_mean": 24.96,
+      "PRECTOTCORR_p99": 18.26,
+      "GWETROOT_dry_season": 0.6987
+    },
+    "-7.80,110.37": {
+      "city": "Yogyakarta",
+      "T2M_annual_mean": 25.84,
+      "PRECTOTCORR_p99": 16.44,
+      "GWETROOT_dry_season": 0.6486
+    },
+    "-7.96,110.59": {
+      "city": "Gunungkidul",
+      "T2M_annual_mean": 25.84,
+      "PRECTOTCORR_p99": 16.44,
+      "GWETROOT_dry_season": 0.6486
+    },
+    "-7.89,110.33": {
+      "city": "Bantul",
+      "T2M_annual_mean": 25.84,
+      "PRECTOTCORR_p99": 16.44,
+      "GWETROOT_dry_season": 0.6486
+    },
+    "-7.83,110.16": {
+      "city": "Kulon Progo",
+      "T2M_annual_mean": 26.38,
+      "PRECTOTCORR_p99": 18.56,
+      "GWETROOT_dry_season": 0.7215
     },
     "-8.65,115.22": {
       "city": "Denpasar",
-      "T2M_annual_mean": 27.0,
-      "PRECTOTCORR_p99": 13.0,
-      "GWETROOT_dry_season": 0.34
+      "T2M_annual_mean": 25.06,
+      "PRECTOTCORR_p99": 15.4,
+      "GWETROOT_dry_season": 0.5968
+    },
+    "-8.58,115.18": {
+      "city": "Badung",
+      "T2M_annual_mean": 25.06,
+      "PRECTOTCORR_p99": 15.4,
+      "GWETROOT_dry_season": 0.5968
+    },
+    "-8.54,115.33": {
+      "city": "Gianyar",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 15.05,
+      "GWETROOT_dry_season": 0.4848
+    },
+    "-8.54,115.12": {
+      "city": "Tabanan",
+      "T2M_annual_mean": 25.06,
+      "PRECTOTCORR_p99": 15.4,
+      "GWETROOT_dry_season": 0.5968
+    },
+    "-8.11,115.09": {
+      "city": "Buleleng",
+      "T2M_annual_mean": 27.56,
+      "PRECTOTCORR_p99": 16.65,
+      "GWETROOT_dry_season": 0.4329
+    },
+    "-8.45,115.61": {
+      "city": "Karangasem",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 15.05,
+      "GWETROOT_dry_season": 0.4848
+    },
+    "-8.54,115.40": {
+      "city": "Klungkung",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 15.05,
+      "GWETROOT_dry_season": 0.4848
+    },
+    "-8.58,116.12": {
+      "city": "Mataram",
+      "T2M_annual_mean": 26.39,
+      "PRECTOTCORR_p99": 13.85,
+      "GWETROOT_dry_season": 0.5783
+    },
+    "-8.46,118.73": {
+      "city": "Bima",
+      "T2M_annual_mean": 27.01,
+      "PRECTOTCORR_p99": 11.69,
+      "GWETROOT_dry_season": 0.4592
+    },
+    "-8.66,116.08": {
+      "city": "Lombok Barat",
+      "T2M_annual_mean": 26.39,
+      "PRECTOTCORR_p99": 13.85,
+      "GWETROOT_dry_season": 0.5783
+    },
+    "-8.72,116.27": {
+      "city": "Lombok Tengah",
+      "T2M_annual_mean": 26.39,
+      "PRECTOTCORR_p99": 13.85,
+      "GWETROOT_dry_season": 0.5783
+    },
+    "-8.49,117.42": {
+      "city": "Sumbawa",
+      "T2M_annual_mean": 26.34,
+      "PRECTOTCORR_p99": 12.82,
+      "GWETROOT_dry_season": 0.5712
+    },
+    "-10.18,123.61": {
+      "city": "Kupang",
+      "T2M_annual_mean": 26.94,
+      "PRECTOTCORR_p99": 16.02,
+      "GWETROOT_dry_season": 0.5014
+    },
+    "-8.84,121.66": {
+      "city": "Ende",
+      "T2M_annual_mean": 26.69,
+      "PRECTOTCORR_p99": 12.74,
+      "GWETROOT_dry_season": 0.6661
+    },
+    "-8.52,123.00": {
+      "city": "Flores Timur",
+      "T2M_annual_mean": 27.83,
+      "PRECTOTCORR_p99": 13.21,
+      "GWETROOT_dry_season": 0.4142
+    },
+    "-9.85,124.23": {
+      "city": "Timor Tengah Selatan",
+      "T2M_annual_mean": 25.66,
+      "PRECTOTCORR_p99": 18.78,
+      "GWETROOT_dry_season": 0.4523
+    },
+    "-9.66,119.42": {
+      "city": "Sumba Barat",
+      "T2M_annual_mean": 27.16,
+      "PRECTOTCORR_p99": 10.67,
+      "GWETROOT_dry_season": 0.508
+    },
+    "-0.03,109.34": {
+      "city": "Pontianak",
+      "T2M_annual_mean": 26.18,
+      "PRECTOTCORR_p99": 19.36,
+      "GWETROOT_dry_season": 0.8807
+    },
+    "0.91,108.99": {
+      "city": "Singkawang",
+      "T2M_annual_mean": 27.35,
+      "PRECTOTCORR_p99": 21.42,
+      "GWETROOT_dry_season": 0.7845
+    },
+    "-1.84,109.98": {
+      "city": "Ketapang",
+      "T2M_annual_mean": 27.16,
+      "PRECTOTCORR_p99": 21.27,
+      "GWETROOT_dry_season": 0.8217
+    },
+    "1.37,109.30": {
+      "city": "Sambas",
+      "T2M_annual_mean": 26.08,
+      "PRECTOTCORR_p99": 23.59,
+      "GWETROOT_dry_season": 0.7026
+    },
+    "0.13,110.59": {
+      "city": "Sanggau",
+      "T2M_annual_mean": 25.69,
+      "PRECTOTCORR_p99": 18.8,
+      "GWETROOT_dry_season": 0.8432
+    },
+    "-2.21,113.91": {
+      "city": "Palangka Raya",
+      "T2M_annual_mean": 26.13,
+      "PRECTOTCORR_p99": 15.59,
+      "GWETROOT_dry_season": 0.4777
+    },
+    "-2.53,111.48": {
+      "city": "Kotawaringin Barat",
+      "T2M_annual_mean": 26.35,
+      "PRECTOTCORR_p99": 15.51,
+      "GWETROOT_dry_season": 0.6075
+    },
+    "-0.92,114.83": {
+      "city": "Barito Utara",
+      "T2M_annual_mean": 25.68,
+      "PRECTOTCORR_p99": 16.98,
+      "GWETROOT_dry_season": 0.8423
+    },
+    "-3.00,114.33": {
+      "city": "Kapuas",
+      "T2M_annual_mean": 26.54,
+      "PRECTOTCORR_p99": 20.1,
+      "GWETROOT_dry_season": 0.7674
+    },
+    "-3.32,114.59": {
+      "city": "Banjarmasin",
+      "T2M_annual_mean": 27.65,
+      "PRECTOTCORR_p99": 19.67,
+      "GWETROOT_dry_season": 0.7638
+    },
+    "-3.44,114.83": {
+      "city": "Banjarbaru",
+      "T2M_annual_mean": 26.49,
+      "PRECTOTCORR_p99": 18.35,
+      "GWETROOT_dry_season": 0.7651
+    },
+    "-3.60,114.76": {
+      "city": "Banjar",
+      "T2M_annual_mean": 26.49,
+      "PRECTOTCORR_p99": 18.35,
+      "GWETROOT_dry_season": 0.7651
+    },
+    "-2.03,115.49": {
+      "city": "Tabalong",
+      "T2M_annual_mean": 25.07,
+      "PRECTOTCORR_p99": 14.41,
+      "GWETROOT_dry_season": 0.8914
+    },
+    "-0.50,117.15": {
+      "city": "Samarinda",
+      "T2M_annual_mean": 25.63,
+      "PRECTOTCORR_p99": 13.51,
+      "GWETROOT_dry_season": 0.88
+    },
+    "-1.27,116.83": {
+      "city": "Balikpapan",
+      "T2M_annual_mean": 27.39,
+      "PRECTOTCORR_p99": 13.17,
+      "GWETROOT_dry_season": 0.8294
+    },
+    "0.12,117.50": {
+      "city": "Bontang",
+      "T2M_annual_mean": 26.8,
+      "PRECTOTCORR_p99": 11.21,
+      "GWETROOT_dry_season": 0.8627
+    },
+    "-0.43,117.00": {
+      "city": "Kutai Kartanegara",
+      "T2M_annual_mean": 25.63,
+      "PRECTOTCORR_p99": 13.51,
+      "GWETROOT_dry_season": 0.88
+    },
+    "2.15,117.44": {
+      "city": "Berau",
+      "T2M_annual_mean": 25.51,
+      "PRECTOTCORR_p99": 14.89,
+      "GWETROOT_dry_season": 0.8168
+    },
+    "3.30,117.64": {
+      "city": "Tarakan",
+      "T2M_annual_mean": 27.68,
+      "PRECTOTCORR_p99": 16.85,
+      "GWETROOT_dry_season": 0.9444
+    },
+    "4.13,117.66": {
+      "city": "Nunukan",
+      "T2M_annual_mean": 26.81,
+      "PRECTOTCORR_p99": 13.94,
+      "GWETROOT_dry_season": 0.904
+    },
+    "-5.15,119.43": {
+      "city": "Makassar",
+      "T2M_annual_mean": 27.4,
+      "PRECTOTCORR_p99": 17.05,
+      "GWETROOT_dry_season": 0.6151
+    },
+    "-4.01,119.62": {
+      "city": "Parepare",
+      "T2M_annual_mean": 27.5,
+      "PRECTOTCORR_p99": 16.49,
+      "GWETROOT_dry_season": 0.7064
+    },
+    "-2.99,120.20": {
+      "city": "Palopo",
+      "T2M_annual_mean": 21.97,
+      "PRECTOTCORR_p99": 17.43,
+      "GWETROOT_dry_season": 0.9239
+    },
+    "-4.54,120.36": {
+      "city": "Bone",
+      "T2M_annual_mean": 28.13,
+      "PRECTOTCORR_p99": 11.22,
+      "GWETROOT_dry_season": 0.7123
+    },
+    "-5.29,119.93": {
+      "city": "Gowa",
+      "T2M_annual_mean": 25.86,
+      "PRECTOTCORR_p99": 16.33,
+      "GWETROOT_dry_season": 0.6894
+    },
+    "-5.00,119.57": {
+      "city": "Maros",
+      "T2M_annual_mean": 27.4,
+      "PRECTOTCORR_p99": 17.05,
+      "GWETROOT_dry_season": 0.6151
+    },
+    "-5.55,120.20": {
+      "city": "Bulukumba",
+      "T2M_annual_mean": 25.86,
+      "PRECTOTCORR_p99": 16.33,
+      "GWETROOT_dry_season": 0.6894
+    },
+    "-3.97,122.51": {
+      "city": "Kendari",
+      "T2M_annual_mean": 26.54,
+      "PRECTOTCORR_p99": 16.57,
+      "GWETROOT_dry_season": 0.7948
+    },
+    "-5.46,122.61": {
+      "city": "Bau-Bau",
+      "T2M_annual_mean": 27.34,
+      "PRECTOTCORR_p99": 12.69,
+      "GWETROOT_dry_season": 0.7365
+    },
+    "-4.06,121.58": {
+      "city": "Kolaka",
+      "T2M_annual_mean": 24.46,
+      "PRECTOTCORR_p99": 15.33,
+      "GWETROOT_dry_season": 0.8294
+    },
+    "-3.97,122.31": {
+      "city": "Konawe",
+      "T2M_annual_mean": 26.54,
+      "PRECTOTCORR_p99": 16.57,
+      "GWETROOT_dry_season": 0.7948
+    },
+    "-0.89,119.87": {
+      "city": "Palu",
+      "T2M_annual_mean": 23.2,
+      "PRECTOTCORR_p99": 11.33,
+      "GWETROOT_dry_season": 0.8192
+    },
+    "-0.95,122.79": {
+      "city": "Luwuk",
+      "T2M_annual_mean": 24.13,
+      "PRECTOTCORR_p99": 17.42,
+      "GWETROOT_dry_season": 0.8964
+    },
+    "-0.68,119.74": {
+      "city": "Donggala",
+      "T2M_annual_mean": 27.02,
+      "PRECTOTCORR_p99": 9.9,
+      "GWETROOT_dry_season": 0.8648
+    },
+    "1.12,120.80": {
+      "city": "Toli-Toli",
+      "T2M_annual_mean": 26.4,
+      "PRECTOTCORR_p99": 12.8,
+      "GWETROOT_dry_season": 0.7367
+    },
+    "1.47,124.84": {
+      "city": "Manado",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 15.0,
+      "GWETROOT_dry_season": 0.7885
+    },
+    "1.44,125.19": {
+      "city": "Bitung",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 15.0,
+      "GWETROOT_dry_season": 0.7885
+    },
+    "1.32,124.83": {
+      "city": "Tomohon",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 15.0,
+      "GWETROOT_dry_season": 0.7885
+    },
+    "1.31,124.85": {
+      "city": "Minahasa",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 15.0,
+      "GWETROOT_dry_season": 0.7885
+    },
+    "0.57,124.20": {
+      "city": "Bolaang Mongondow",
+      "T2M_annual_mean": 25.72,
+      "PRECTOTCORR_p99": 10.65,
+      "GWETROOT_dry_season": 0.8337
+    },
+    "0.54,123.06": {
+      "city": "Gorontalo",
+      "T2M_annual_mean": 25.99,
+      "PRECTOTCORR_p99": 10.31,
+      "GWETROOT_dry_season": 0.8449
+    },
+    "0.58,123.30": {
+      "city": "Bone Bolango",
+      "T2M_annual_mean": 25.99,
+      "PRECTOTCORR_p99": 10.31,
+      "GWETROOT_dry_season": 0.8449
+    },
+    "0.34,121.85": {
+      "city": "Pohuwato",
+      "T2M_annual_mean": 26.06,
+      "PRECTOTCORR_p99": 10.9,
+      "GWETROOT_dry_season": 0.764
+    },
+    "-3.54,118.97": {
+      "city": "Majene",
+      "T2M_annual_mean": 27.61,
+      "PRECTOTCORR_p99": 16.31,
+      "GWETROOT_dry_season": 0.7585
+    },
+    "-2.67,118.89": {
+      "city": "Mamuju",
+      "T2M_annual_mean": 27.76,
+      "PRECTOTCORR_p99": 14.19,
+      "GWETROOT_dry_season": 0.773
+    },
+    "-3.41,119.33": {
+      "city": "Polewali Mandar",
+      "T2M_annual_mean": 25.32,
+      "PRECTOTCORR_p99": 16.73,
+      "GWETROOT_dry_season": 0.7338
+    },
+    "3.60,98.67": {
+      "city": "Medan",
+      "T2M_annual_mean": 25.75,
+      "PRECTOTCORR_p99": 13.13,
+      "GWETROOT_dry_season": 0.784
+    },
+    "3.60,98.49": {
+      "city": "Binjai",
+      "T2M_annual_mean": 25.75,
+      "PRECTOTCORR_p99": 13.13,
+      "GWETROOT_dry_season": 0.784
+    },
+    "3.33,99.16": {
+      "city": "Tebing Tinggi",
+      "T2M_annual_mean": 28.01,
+      "PRECTOTCORR_p99": 14.06,
+      "GWETROOT_dry_season": 0.8889
+    },
+    "2.96,99.07": {
+      "city": "Pematangsiantar",
+      "T2M_annual_mean": 25.84,
+      "PRECTOTCORR_p99": 14.48,
+      "GWETROOT_dry_season": 0.896
+    },
+    "2.97,99.80": {
+      "city": "Tanjungbalai",
+      "T2M_annual_mean": 27.43,
+      "PRECTOTCORR_p99": 13.82,
+      "GWETROOT_dry_season": 0.9107
+    },
+    "3.52,98.87": {
+      "city": "Deli Serdang",
+      "T2M_annual_mean": 25.75,
+      "PRECTOTCORR_p99": 13.13,
+      "GWETROOT_dry_season": 0.784
+    },
+    "3.78,98.32": {
+      "city": "Langkat",
+      "T2M_annual_mean": 25.19,
+      "PRECTOTCORR_p99": 14.17,
+      "GWETROOT_dry_season": 0.83
+    },
+    "2.97,99.10": {
+      "city": "Simalungun",
+      "T2M_annual_mean": 25.84,
+      "PRECTOTCORR_p99": 14.48,
+      "GWETROOT_dry_season": 0.896
+    },
+    "3.13,98.49": {
+      "city": "Karo",
+      "T2M_annual_mean": 21.92,
+      "PRECTOTCORR_p99": 14.3,
+      "GWETROOT_dry_season": 0.8417
+    },
+    "-0.95,100.35": {
+      "city": "Padang",
+      "T2M_annual_mean": 23.76,
+      "PRECTOTCORR_p99": 20.41,
+      "GWETROOT_dry_season": 0.9144
+    },
+    "-0.31,100.37": {
+      "city": "Bukittinggi",
+      "T2M_annual_mean": 23.36,
+      "PRECTOTCORR_p99": 20.64,
+      "GWETROOT_dry_season": 0.9173
+    },
+    "-0.23,100.64": {
+      "city": "Payakumbuh",
+      "T2M_annual_mean": 23.71,
+      "PRECTOTCORR_p99": 19.28,
+      "GWETROOT_dry_season": 0.9162
+    },
+    "-0.80,100.66": {
+      "city": "Solok",
+      "T2M_annual_mean": 23.76,
+      "PRECTOTCORR_p99": 20.41,
+      "GWETROOT_dry_season": 0.9144
+    },
+    "-0.23,100.05": {
+      "city": "Agam",
+      "T2M_annual_mean": 24.23,
+      "PRECTOTCORR_p99": 22.91,
+      "GWETROOT_dry_season": 0.9185
+    },
+    "-0.36,100.68": {
+      "city": "Lima Puluh Kota",
+      "T2M_annual_mean": 23.36,
+      "PRECTOTCORR_p99": 20.64,
+      "GWETROOT_dry_season": 0.9173
+    },
+    "0.53,101.45": {
+      "city": "Pekanbaru",
+      "T2M_annual_mean": 26.0,
+      "PRECTOTCORR_p99": 16.33,
+      "GWETROOT_dry_season": 0.8787
+    },
+    "1.68,101.45": {
+      "city": "Dumai",
+      "T2M_annual_mean": 26.11,
+      "PRECTOTCORR_p99": 13.7,
+      "GWETROOT_dry_season": 0.8861
+    },
+    "1.48,102.11": {
+      "city": "Bengkalis",
+      "T2M_annual_mean": 26.66,
+      "PRECTOTCORR_p99": 13.28,
+      "GWETROOT_dry_season": 0.8746
+    },
+    "0.36,101.18": {
+      "city": "Kampar",
+      "T2M_annual_mean": 26.0,
+      "PRECTOTCORR_p99": 16.33,
+      "GWETROOT_dry_season": 0.8787
+    },
+    "0.91,100.41": {
+      "city": "Rokan Hulu",
+      "T2M_annual_mean": 25.8,
+      "PRECTOTCORR_p99": 17.86,
+      "GWETROOT_dry_season": 0.9088
+    },
+    "-1.61,103.61": {
+      "city": "Jambi",
+      "T2M_annual_mean": 26.02,
+      "PRECTOTCORR_p99": 12.81,
+      "GWETROOT_dry_season": 0.8402
+    },
+    "-2.06,101.40": {
+      "city": "Sungai Penuh",
+      "T2M_annual_mean": 22.06,
+      "PRECTOTCORR_p99": 12.73,
+      "GWETROOT_dry_season": 0.7479
+    },
+    "-1.60,103.70": {
+      "city": "Muaro Jambi",
+      "T2M_annual_mean": 26.02,
+      "PRECTOTCORR_p99": 12.81,
+      "GWETROOT_dry_season": 0.8402
+    },
+    "-1.71,102.80": {
+      "city": "Batanghari",
+      "T2M_annual_mean": 25.79,
+      "PRECTOTCORR_p99": 13.54,
+      "GWETROOT_dry_season": 0.8346
+    },
+    "-2.98,104.78": {
+      "city": "Palembang",
+      "T2M_annual_mean": 26.23,
+      "PRECTOTCORR_p99": 17.16,
+      "GWETROOT_dry_season": 0.819
+    },
+    "-3.44,104.23": {
+      "city": "Prabumulih",
+      "T2M_annual_mean": 26.2,
+      "PRECTOTCORR_p99": 16.89,
+      "GWETROOT_dry_season": 0.8138
+    },
+    "-3.30,102.86": {
+      "city": "Lubuklinggau",
+      "T2M_annual_mean": 24.77,
+      "PRECTOTCORR_p99": 16.79,
+      "GWETROOT_dry_season": 0.8221
+    },
+    "-2.97,103.97": {
+      "city": "Musi Banyuasin",
+      "T2M_annual_mean": 26.22,
+      "PRECTOTCORR_p99": 15.19,
+      "GWETROOT_dry_season": 0.8582
+    },
+    "-4.01,104.02": {
+      "city": "Ogan Komering Ulu",
+      "T2M_annual_mean": 24.4,
+      "PRECTOTCORR_p99": 15.41,
+      "GWETROOT_dry_season": 0.7896
+    },
+    "-3.79,102.26": {
+      "city": "Bengkulu",
+      "T2M_annual_mean": 25.79,
+      "PRECTOTCORR_p99": 19.45,
+      "GWETROOT_dry_season": 0.8275
+    },
+    "-3.47,102.55": {
+      "city": "Rejang Lebong",
+      "T2M_annual_mean": 23.14,
+      "PRECTOTCORR_p99": 16.86,
+      "GWETROOT_dry_season": 0.8085
+    },
+    "-4.00,102.60": {
+      "city": "Seluma",
+      "T2M_annual_mean": 25.79,
+      "PRECTOTCORR_p99": 19.45,
+      "GWETROOT_dry_season": 0.8275
+    },
+    "-5.43,105.26": {
+      "city": "Bandar Lampung",
+      "T2M_annual_mean": 26.27,
+      "PRECTOTCORR_p99": 15.19,
+      "GWETROOT_dry_season": 0.6989
+    },
+    "-5.11,105.31": {
+      "city": "Metro",
+      "T2M_annual_mean": 26.26,
+      "PRECTOTCORR_p99": 13.97,
+      "GWETROOT_dry_season": 0.6773
+    },
+    "-5.62,105.54": {
+      "city": "Lampung Selatan",
+      "T2M_annual_mean": 27.23,
+      "PRECTOTCORR_p99": 16.46,
+      "GWETROOT_dry_season": 0.7608
+    },
+    "-4.82,105.30": {
+      "city": "Lampung Tengah",
+      "T2M_annual_mean": 26.26,
+      "PRECTOTCORR_p99": 13.97,
+      "GWETROOT_dry_season": 0.6773
+    },
+    "-4.40,104.46": {
+      "city": "Way Kanan",
+      "T2M_annual_mean": 25.2,
+      "PRECTOTCORR_p99": 14.29,
+      "GWETROOT_dry_season": 0.6373
+    },
+    "-2.13,106.12": {
+      "city": "Pangkal Pinang",
+      "T2M_annual_mean": 27.59,
+      "PRECTOTCORR_p99": 12.02,
+      "GWETROOT_dry_season": 0.6225
+    },
+    "-2.26,106.06": {
+      "city": "Bangka",
+      "T2M_annual_mean": 27.35,
+      "PRECTOTCORR_p99": 13.55,
+      "GWETROOT_dry_season": 0.67
+    },
+    "-2.72,107.67": {
+      "city": "Belitung",
+      "T2M_annual_mean": 27.89,
+      "PRECTOTCORR_p99": 14.97,
+      "GWETROOT_dry_season": 0.3463
+    },
+    "1.05,104.03": {
+      "city": "Batam",
+      "T2M_annual_mean": 27.79,
+      "PRECTOTCORR_p99": 15.11,
+      "GWETROOT_dry_season": 0.8805
+    },
+    "0.92,104.45": {
+      "city": "Tanjung Pinang",
+      "T2M_annual_mean": 27.82,
+      "PRECTOTCORR_p99": 14.92,
+      "GWETROOT_dry_season": 0.7512
+    },
+    "1.07,104.53": {
+      "city": "Bintan",
+      "T2M_annual_mean": 27.82,
+      "PRECTOTCORR_p99": 14.92,
+      "GWETROOT_dry_season": 0.7512
+    },
+    "1.00,103.43": {
+      "city": "Karimun",
+      "T2M_annual_mean": 27.55,
+      "PRECTOTCORR_p99": 13.12,
+      "GWETROOT_dry_season": 0.9037
+    },
+    "5.55,95.32": {
+      "city": "Banda Aceh",
+      "T2M_annual_mean": 26.81,
+      "PRECTOTCORR_p99": 14.92,
+      "GWETROOT_dry_season": 0.7808
+    },
+    "5.89,95.32": {
+      "city": "Sabang",
+      "T2M_annual_mean": 27.99,
+      "PRECTOTCORR_p99": 13.62,
+      "GWETROOT_dry_season": 0.7683
+    },
+    "4.47,97.97": {
+      "city": "Langsa",
+      "T2M_annual_mean": 27.37,
+      "PRECTOTCORR_p99": 14.68,
+      "GWETROOT_dry_season": 0.8667
+    },
+    "5.18,97.15": {
+      "city": "Lhokseumawe",
+      "T2M_annual_mean": 24.02,
+      "PRECTOTCORR_p99": 15.03,
+      "GWETROOT_dry_season": 0.7935
+    },
+    "5.47,95.61": {
+      "city": "Aceh Besar",
+      "T2M_annual_mean": 26.81,
+      "PRECTOTCORR_p99": 14.92,
+      "GWETROOT_dry_season": 0.7808
+    },
+    "4.96,96.14": {
+      "city": "Pidie",
+      "T2M_annual_mean": 22.64,
+      "PRECTOTCORR_p99": 15.3,
+      "GWETROOT_dry_season": 0.8176
+    },
+    "5.21,96.70": {
+      "city": "Bireuen",
+      "T2M_annual_mean": 24.02,
+      "PRECTOTCORR_p99": 15.03,
+      "GWETROOT_dry_season": 0.7935
+    },
+    "-3.70,128.18": {
+      "city": "Ambon",
+      "T2M_annual_mean": 26.42,
+      "PRECTOTCORR_p99": 34.16,
+      "GWETROOT_dry_season": 0.871
+    },
+    "-5.63,132.75": {
+      "city": "Tual",
+      "T2M_annual_mean": 27.59,
+      "PRECTOTCORR_p99": 12.75,
+      "GWETROOT_dry_season": 0.719
+    },
+    "-3.34,129.87": {
+      "city": "Maluku Tengah",
+      "T2M_annual_mean": 26.92,
+      "PRECTOTCORR_p99": 25.48,
+      "GWETROOT_dry_season": 0.8451
+    },
+    "-3.08,128.17": {
+      "city": "Seram Bagian Barat",
+      "T2M_annual_mean": 26.13,
+      "PRECTOTCORR_p99": 29.57,
+      "GWETROOT_dry_season": 0.8887
+    },
+    "-3.33,126.50": {
+      "city": "Buru",
+      "T2M_annual_mean": 24.11,
+      "PRECTOTCORR_p99": 14.24,
+      "GWETROOT_dry_season": 0.7087
+    },
+    "0.78,127.37": {
+      "city": "Ternate",
+      "T2M_annual_mean": 27.5,
+      "PRECTOTCORR_p99": 13.81,
+      "GWETROOT_dry_season": 0.8388
+    },
+    "0.68,127.43": {
+      "city": "Tidore Kepulauan",
+      "T2M_annual_mean": 27.13,
+      "PRECTOTCORR_p99": 11.58,
+      "GWETROOT_dry_season": 0.8051
+    },
+    "1.79,127.93": {
+      "city": "Halmahera Utara",
+      "T2M_annual_mean": 27.83,
+      "PRECTOTCORR_p99": 14.31,
+      "GWETROOT_dry_season": 0.8208
+    },
+    "-0.58,127.53": {
+      "city": "Halmahera Selatan",
+      "T2M_annual_mean": 27.16,
+      "PRECTOTCORR_p99": 12.32,
+      "GWETROOT_dry_season": 0.841
+    },
+    "-2.53,140.72": {
+      "city": "Jayapura",
+      "T2M_annual_mean": 26.82,
+      "PRECTOTCORR_p99": 14.57,
+      "GWETROOT_dry_season": 0.879
+    },
+    "-0.88,131.25": {
+      "city": "Sorong",
+      "T2M_annual_mean": 27.26,
+      "PRECTOTCORR_p99": 19.35,
+      "GWETROOT_dry_season": 0.9362
+    },
+    "-0.87,134.08": {
+      "city": "Manokwari",
+      "T2M_annual_mean": 27.7,
+      "PRECTOTCORR_p99": 17.1,
+      "GWETROOT_dry_season": 0.8887
+    },
+    "-2.92,132.30": {
+      "city": "Fakfak",
+      "T2M_annual_mean": 25.48,
+      "PRECTOTCORR_p99": 20.24,
+      "GWETROOT_dry_season": 0.9376
+    },
+    "-1.18,136.06": {
+      "city": "Biak Numfor",
+      "T2M_annual_mean": 27.87,
+      "PRECTOTCORR_p99": 14.66,
+      "GWETROOT_dry_season": 0.9414
+    },
+    "-8.48,140.40": {
+      "city": "Merauke",
+      "T2M_annual_mean": 26.58,
+      "PRECTOTCORR_p99": 18.09,
+      "GWETROOT_dry_season": 0.6618
+    },
+    "-3.37,135.48": {
+      "city": "Nabire",
+      "T2M_annual_mean": 23.8,
+      "PRECTOTCORR_p99": 19.05,
+      "GWETROOT_dry_season": 0.9554
+    },
+    "-4.53,136.90": {
+      "city": "Timika",
+      "T2M_annual_mean": 24.15,
+      "PRECTOTCORR_p99": 24.79,
+      "GWETROOT_dry_season": 0.9586
     }
   }
 }
