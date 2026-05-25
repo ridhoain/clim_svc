@@ -235,6 +235,8 @@ tab1, tab2, tab3 = st.tabs(["Map", "Province Comparison", "Table (All Cities)"])
 
 with tab1:
     geojson = load_geojson()
+    geo_path = Path("data/kabkota.geojson")
+    st.info(f"GeoJSON path: `{geo_path.resolve()}` — exists: {geo_path.exists()} — loaded features: {len(geojson.get('features', [])) if geojson else 0}")
     if geojson:
         # Build a score lookup keyed by canonical city name
         score_lookup = df.set_index("city")[
