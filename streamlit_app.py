@@ -10,6 +10,35 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
+# ── GeoJSON city name → our cities.csv name ───────────────────────────────────
+# Most kota entries have "Kota " prefix; these are the exceptions
+_GEO_TO_CITY: dict[str, str] = {
+    "Kota Administrasi Jakarta Barat":  "Jakarta",
+    "Kota Administrasi Jakarta Pusat":  "Jakarta",
+    "Kota Administrasi Jakarta Selatan":"Jakarta",
+    "Kota Administrasi Jakarta Timur":  "Jakarta",
+    "Kota Administrasi Jakarta Utara":  "Jakarta",
+    "Kota Surakarta":                   "Solo",
+    "Kota Lubuk Linggau":               "Lubuklinggau",
+    "Kota Palangkaraya":                "Palangka Raya",
+    "Kota Pare Pare":                   "Parepare",
+    "Kota Bau Bau":                     "Bau-Bau",
+    "Kota Tanjung Balai":               "Tanjungbalai",
+    "Fak Fak":                          "Fakfak",
+    "Mimika":                           "Timika",
+    "Toli Toli":                        "Toli-Toli",
+    "Luwu":                             "Luwuk",
+    "Banyumas":                         "Purwokerto",
+}
+
+def _geo_city_name(kab_kota: str) -> str:
+    """Map a GeoJSON KAB_KOTA string to our canonical city name."""
+    if kab_kota in _GEO_TO_CITY:
+        return _GEO_TO_CITY[kab_kota]
+    if kab_kota.startswith("Kota "):
+        return kab_kota[5:]
+    return kab_kota
+
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="Indonesia Climate Hazard Assessment",
@@ -66,6 +95,13 @@ def load_cities() -> pd.DataFrame:
     if not p.exists():
         return pd.DataFrame()
     return pd.read_csv(p)
+
+@st.cache_data
+def load_geojson() -> dict:
+    p = Path("data/kabkota.geojson")
+    if not p.exists():
+        return {}
+    return json.loads(p.read_text())
 
 def build_assessment_df(baselines: dict, scenario: str) -> pd.DataFrame:
     """Compute risk scores for all cities in the fixture."""
@@ -198,23 +234,75 @@ st.divider()
 tab1, tab2, tab3 = st.tabs(["Map", "Province Comparison", "Table (All Cities)"])
 
 with tab1:
-    fig_map = px.scatter_mapbox(
-        df, lat="lat", lon="lon", color="composite_score",
-        color_continuous_scale=["#16a34a", "#d97706", "#dc2626"],
-        range_color=[0, 100],
-        size_max=14, zoom=4, center={"lat": -2.5, "lon": 118.0},
-        hover_name="city",
-        hover_data={"province": True, "composite_score": True,
-                    "temp_score": True, "precip_score": True,
-                    "drought_score": True, "slr_score": True,
-                    "lat": False, "lon": False},
-        labels={"composite_score": "Composite Hazard"},
-        mapbox_style="carto-positron",
-        height=520,
-    )
-    fig_map.update_layout(margin={"r": 0, "l": 0, "b": 0, "t": 0},
-                          coloraxis_colorbar=dict(title="Hazard Score"))
-    st.plotly_chart(fig_map, width="stretch")
+    geojson = load_geojson()
+    if geojson:
+        # Build a score lookup keyed by canonical city name
+        score_lookup = df.set_index("city")[
+            ["composite_score", "temp_score", "precip_score",
+             "drought_score", "slr_score", "province", "composite_level"]
+        ].to_dict("index")
+
+        # Annotate every GeoJSON feature with the matching score (NaN if no data)
+        for feat in geojson["features"]:
+            city_name = _geo_city_name(feat["properties"]["KAB_KOTA"])
+            info = score_lookup.get(city_name, {})
+            feat["properties"]["city_name"]       = city_name
+            feat["properties"]["composite_score"] = info.get("composite_score")
+            feat["properties"]["temp_score"]      = info.get("temp_score")
+            feat["properties"]["precip_score"]    = info.get("precip_score")
+            feat["properties"]["drought_score"]   = info.get("drought_score")
+            feat["properties"]["slr_score"]       = info.get("slr_score")
+            feat["properties"]["province"]        = info.get("province", feat["properties"]["PROVINSI"])
+            feat["properties"]["has_data"]        = city_name in score_lookup
+
+        # DataFrame for choropleth — include all 514 polygons
+        geo_df = pd.DataFrame([
+            {
+                "KAB_KOTA":        f["properties"]["KAB_KOTA"],
+                "city_name":       f["properties"]["city_name"],
+                "province":        f["properties"]["province"],
+                "composite_score": f["properties"]["composite_score"],
+                "temp_score":      f["properties"]["temp_score"],
+                "precip_score":    f["properties"]["precip_score"],
+                "drought_score":   f["properties"]["drought_score"],
+                "slr_score":       f["properties"]["slr_score"],
+            }
+            for f in geojson["features"]
+        ])
+
+        fig_map = px.choropleth_mapbox(
+            geo_df,
+            geojson=geojson,
+            locations="KAB_KOTA",
+            featureidkey="properties.KAB_KOTA",
+            color="composite_score",
+            color_continuous_scale=["#16a34a", "#f59e0b", "#dc2626", "#7c3aed"],
+            range_color=[0, 100],
+            mapbox_style="carto-positron",
+            zoom=4,
+            center={"lat": -2.5, "lon": 118.0},
+            opacity=0.75,
+            hover_name="city_name",
+            hover_data={
+                "province":        True,
+                "composite_score": True,
+                "temp_score":      True,
+                "precip_score":    True,
+                "drought_score":   True,
+                "slr_score":       True,
+                "KAB_KOTA":        False,
+            },
+            labels={"composite_score": "Composite Hazard"},
+            height=560,
+        )
+        fig_map.update_layout(
+            margin={"r": 0, "l": 0, "b": 0, "t": 0},
+            coloraxis_colorbar=dict(title="Hazard Score"),
+        )
+        st.plotly_chart(fig_map, width="stretch")
+        st.caption(f"Showing {len(df)} cities with hazard data · Grey polygons = outside current dataset")
+    else:
+        st.warning("GeoJSON not found at data/kabkota.geojson")
 
 with tab2:
     prov_df = df.groupby("province").agg(
