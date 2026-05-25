@@ -26,9 +26,9 @@ DELTAS = {
 }
 
 SCENARIO_LABELS = {
-    "ssp126": "SSP1-2.6 — Low (1.5 °C target)",
-    "ssp245": "SSP2-4.5 — Medium (2 °C target)",
-    "ssp585": "SSP5-8.5 — High (no mitigation)",
+    "ssp126": "SSP1-2.6 — Low (Strong mitigation)",
+    "ssp245": "SSP2-4.5 — Medium (Moderate mitigation)",
+    "ssp585": "SSP5-8.5 — High (Business as Usual)",
 }
 
 RISK_COLORS = {"low": "#16a34a", "moderate": "#d97706", "high": "#dc2626", "critical": "#7c3aed"}
@@ -113,8 +113,8 @@ def build_assessment_df(baselines: dict, scenario: str) -> pd.DataFrame:
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.title("🌏 Climate Hazard")
-    st.caption("Indonesia 2000–2020 → 2020–2040")
+    st.title("Indonesia Climate Hazard")
+    st.caption("2000–2020 → 2020–2040")
     st.divider()
 
     scenario = st.selectbox("Emissions scenario", list(SCENARIO_LABELS.keys()),
@@ -142,14 +142,14 @@ with st.sidebar:
     st.divider()
     ts = baselines.get("metadata", {}).get("fetched_at", "seeded")
     if ts == "seeded":
-        st.warning("⚠ Using seeded values — trigger GitHub Actions to refresh with real NASA POWER data.")
+        st.warning("⚠ Using seeded values — trigger GitHub Actions to refresh with real climate data.")
     else:
         st.caption(f"Data refreshed: {ts[:10]}")
-    st.caption(f"{len(df)} cities loaded")
+    st.caption(f"{len(df)} cities loaded /n Created by Ainur Ridho")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
-st.title(f"Climate Hazard Assessment — {selected_city}")
+st.title(f"{selected_city} - Climate Hazard")
 st.caption(f"{city_row['province']} · Baseline 2000–2020 → Projected 2020–2040 · {SCENARIO_LABELS[scenario]}")
 
 # ── Metric cards ──────────────────────────────────────────────────────────────
@@ -162,32 +162,32 @@ def metric_card(col, label, baseline, future, delta, score, level):
                  f"font-size:0.8rem;font-weight:600;display:inline-block'>Score {score} · {level}</div>",
                  unsafe_allow_html=True)
 
-metric_card(col1, "🌡 Temperature",
+metric_card(col1, "Surface Temperature",
             f"{city_row['baseline_temp_c']:.1f}°C",
             f"{city_row['future_temp_c']:.1f}°C",
             city_row['delta_temp_c'],
             city_row['temp_score'], city_row['temp_level'])
 
-metric_card(col2, "🌧 Precip (p99)",
+metric_card(col2, "Rainfall (p99)",
             f"{city_row['baseline_precip']:.1f} mm/d",
             f"{city_row['baseline_precip']*(1+city_row['delta_precip_pct']/100):.1f} mm/d",
             city_row['delta_precip_pct'],
             city_row['precip_score'], city_row['precip_level'])
 
-metric_card(col3, "🌱 Soil wetness",
+metric_card(col3, "Drought",
             f"{city_row['baseline_wetness']:.3f}",
             f"{city_row['baseline_wetness']+city_row['delta_wetness']:.3f}",
             city_row['delta_wetness'],
             city_row['drought_score'], city_row['drought_level'])
 
-col4.metric("🌊 Sea Level Rise", f"+{city_row['slr_delta_cm']:.1f} cm", "by 2040")
+col4.metric("Sea Level Rise", f"+{city_row['slr_delta_cm']:.1f} cm", "by 2040")
 col4.markdown(f"<div style='background:{RISK_COLORS[city_row['slr_level']]};color:white;"
               f"padding:2px 8px;border-radius:4px;font-size:0.8rem;font-weight:600;"
               f"display:inline-block'>Score {city_row['slr_score']} · {city_row['slr_level']}</div>",
               unsafe_allow_html=True)
 
 comp_color = RISK_COLORS[city_row['composite_level']]
-col5.metric("📊 Composite Risk", f"{city_row['composite_score']}/100")
+col5.metric("Composite Risk", f"{city_row['composite_score']}/100")
 col5.markdown(f"<div style='background:{comp_color};color:white;padding:2px 8px;"
               f"border-radius:4px;font-size:0.8rem;font-weight:600;display:inline-block'>"
               f"{city_row['composite_level'].title()}</div>", unsafe_allow_html=True)
@@ -195,12 +195,12 @@ col5.markdown(f"<div style='background:{comp_color};color:white;padding:2px 8px;
 st.divider()
 
 # ── Charts ────────────────────────────────────────────────────────────────────
-tab1, tab2, tab3 = st.tabs(["🗺 Risk Map", "📊 Province Comparison", "📋 All Cities Table"])
+tab1, tab2, tab3 = st.tabs(["Map", "Province Comparison", "Table (All Cities)"])
 
 with tab1:
     fig_map = px.scatter_mapbox(
         df, lat="lat", lon="lon", color="composite_score",
-        color_continuous_scale=["#16a34a", "#d97706", "#dc2626", "#7c3aed"],
+        color_continuous_scale=["#16a34a", "#d97706", "#dc2626"],
         range_color=[0, 100],
         size_max=14, zoom=4, center={"lat": -2.5, "lon": 118.0},
         hover_name="city",
@@ -208,12 +208,12 @@ with tab1:
                     "temp_score": True, "precip_score": True,
                     "drought_score": True, "slr_score": True,
                     "lat": False, "lon": False},
-        labels={"composite_score": "Composite Risk"},
+        labels={"composite_score": "Composite Hazard"},
         mapbox_style="carto-positron",
         height=520,
     )
     fig_map.update_layout(margin={"r": 0, "l": 0, "b": 0, "t": 0},
-                          coloraxis_colorbar=dict(title="Risk Score"))
+                          coloraxis_colorbar=dict(title="Hazard Score"))
     st.plotly_chart(fig_map, width="stretch")
 
 with tab2:
@@ -266,6 +266,6 @@ with tab3:
         },
     )
     st.download_button(
-        "⬇ Download CSV", display_df.to_csv(index=False),
-        file_name=f"indonesia_climate_risk_{scenario}.csv", mime="text/csv",
+        "⬇ Download CSV Table", display_df.to_csv(index=False),
+        file_name=f"indonesia_climate_hazard_{scenario}.csv", mime="text/csv",
     )
