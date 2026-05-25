@@ -234,75 +234,79 @@ st.divider()
 tab1, tab2, tab3 = st.tabs(["Map", "Province Comparison", "Table (All Cities)"])
 
 with tab1:
+    import folium
+    from streamlit_folium import st_folium
+    import branca.colormap as cm
+    import copy
+
     geojson = load_geojson()
-    geo_path = Path("data/kabkota.geojson")
-    st.info(f"GeoJSON path: `{geo_path.resolve()}` — exists: {geo_path.exists()} — loaded features: {len(geojson.get('features', [])) if geojson else 0}")
     if geojson:
-        # Build a score lookup keyed by canonical city name
         score_lookup = df.set_index("city")[
             ["composite_score", "temp_score", "precip_score",
-             "drought_score", "slr_score", "province", "composite_level"]
+             "drought_score", "slr_score", "composite_level"]
         ].to_dict("index")
 
-        # Annotate every GeoJSON feature with the matching score (NaN if no data)
-        for feat in geojson["features"]:
-            city_name = _geo_city_name(feat["properties"]["KAB_KOTA"])
-            info = score_lookup.get(city_name, {})
-            feat["properties"]["city_name"]       = city_name
-            feat["properties"]["composite_score"] = info.get("composite_score")
-            feat["properties"]["temp_score"]      = info.get("temp_score")
-            feat["properties"]["precip_score"]    = info.get("precip_score")
-            feat["properties"]["drought_score"]   = info.get("drought_score")
-            feat["properties"]["slr_score"]       = info.get("slr_score")
-            feat["properties"]["province"]        = info.get("province", feat["properties"]["PROVINSI"])
-            feat["properties"]["has_data"]        = city_name in score_lookup
+        # Embed scores into a copy of the GeoJSON so tooltip/style can read them
+        geo_copy = copy.deepcopy(geojson)
+        for feat in geo_copy["features"]:
+            p    = feat["properties"]
+            name = _geo_city_name(p["KAB_KOTA"])
+            info = score_lookup.get(name, {})
+            p["city_name"]       = name
+            p["composite_score"] = info.get("composite_score", -1)
+            p["temp_score"]      = info.get("temp_score", "—")
+            p["precip_score"]    = info.get("precip_score", "—")
+            p["drought_score"]   = info.get("drought_score", "—")
+            p["slr_score"]       = info.get("slr_score", "—")
+            p["risk_level"]      = info.get("composite_level", "").title() if info else "No data"
 
-        # DataFrame for choropleth — include all 514 polygons
-        geo_df = pd.DataFrame([
-            {
-                "KAB_KOTA":        f["properties"]["KAB_KOTA"],
-                "city_name":       f["properties"]["city_name"],
-                "province":        f["properties"]["province"],
-                "composite_score": f["properties"]["composite_score"],
-                "temp_score":      f["properties"]["temp_score"],
-                "precip_score":    f["properties"]["precip_score"],
-                "drought_score":   f["properties"]["drought_score"],
-                "slr_score":       f["properties"]["slr_score"],
-            }
-            for f in geojson["features"]
-        ])
+        colormap = cm.LinearColormap(
+            colors=["#16a34a", "#d97706", "#dc2626", "#7c3aed"],
+            vmin=0, vmax=100,
+            caption="Composite Hazard Score (0–100)",
+        )
 
-        fig_map = px.choropleth_mapbox(
-            geo_df,
-            geojson=geojson,
-            locations="KAB_KOTA",
-            featureidkey="properties.KAB_KOTA",
-            color="composite_score",
-            color_continuous_scale=["#16a34a", "#f59e0b", "#dc2626", "#7c3aed"],
-            range_color=[0, 100],
-            mapbox_style="carto-positron",
-            zoom=4,
-            center={"lat": -2.5, "lon": 118.0},
-            opacity=0.75,
-            hover_name="city_name",
-            hover_data={
-                "province":        True,
-                "composite_score": True,
-                "temp_score":      True,
-                "precip_score":    True,
-                "drought_score":   True,
-                "slr_score":       True,
-                "KAB_KOTA":        False,
-            },
-            labels={"composite_score": "Composite Hazard"},
-            height=560,
+        def _style(feat):
+            score = feat["properties"]["composite_score"]
+            if score < 0:
+                return {"fillColor": "#d1d5db", "color": "#9ca3af",
+                        "weight": 0.4, "fillOpacity": 0.45}
+            return {"fillColor": colormap(score), "color": "#ffffff",
+                    "weight": 0.5, "fillOpacity": 0.78}
+
+        def _highlight(feat):
+            return {"weight": 2.5, "color": "#1e293b", "fillOpacity": 0.92}
+
+        m = folium.Map(
+            location=[-2.5, 118.0],
+            zoom_start=5,
+            tiles="CartoDB positron",
+            prefer_canvas=True,
         )
-        fig_map.update_layout(
-            margin={"r": 0, "l": 0, "b": 0, "t": 0},
-            coloraxis_colorbar=dict(title="Hazard Score"),
+
+        folium.GeoJson(
+            geo_copy,
+            style_function=_style,
+            highlight_function=_highlight,
+            tooltip=folium.GeoJsonTooltip(
+                fields=["city_name", "PROVINSI", "risk_level",
+                        "composite_score", "temp_score",
+                        "precip_score", "drought_score", "slr_score"],
+                aliases=["City", "Province", "Risk Level",
+                         "Composite", "Temp", "Precip", "Drought", "SLR"],
+                localize=True,
+                sticky=True,
+                style="font-size:12px;",
+            ),
+        ).add_to(m)
+
+        colormap.add_to(m)
+
+        st_folium(m, width="100%", height=560, returned_objects=[])
+        st.caption(
+            f"{len(df)} cities with hazard data · "
+            f"Grey polygons = outside current dataset · Hover to see scores"
         )
-        st.plotly_chart(fig_map, width="stretch")
-        st.caption(f"Showing {len(df)} cities with hazard data · Grey polygons = outside current dataset")
     else:
         st.warning("GeoJSON not found at data/kabkota.geojson")
 
